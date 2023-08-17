@@ -21,9 +21,14 @@ docker rm containerName -f
 docker exec -it node-app /bin/sh
 cat index.js
 
+#docker volume
+docker volume create node_volume
+
 #run command
 %cd%
 docker run -d -v "$(pwd)":/app -p 3000:3000 --name node-app node-app-image:latest
+docker run -d -v node_volume:/app -p 3000:3000 --name node-app node-app-image:latest
+docker run -d --mount source=node_volume,destination=/app -p 3000:3000 --name node-app node-app-image:latest
 
 #inspect container
 docker inspect containerId
