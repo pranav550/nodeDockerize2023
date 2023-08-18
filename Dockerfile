@@ -1,9 +1,17 @@
 FROM node:20-alpine3.17
 WORKDIR /app
-COPY . .
-RUN npm install
-COPY . .
-EXPOSE 3000
-CMD ["npm", "run", "start"]
+COPY package.json .
+#RUN npm install
+
+ARG NODE_ENV
+RUN if [ "$NODE_ENV" = "development" ]; \
+    then npm install; \
+    else npm install --only=production; \
+    fi
+
+COPY . ./
+ENV PORT 3000
+EXPOSE $PORT
+CMD ["node", "index.js"]
 
 

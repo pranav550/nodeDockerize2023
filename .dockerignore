@@ -8,3 +8,4 @@ dist
 .aws
 .coverage
 npm-debug.log
+docker-compose*
